@@ -1,0 +1,26 @@
+{
+  "name": "tcas-alert",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Discord bot for TCAS deadline countdowns",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "build": "tsc --noEmit",
+    "test": "tsx --test src/**/*.test.ts",
+    "alert:preview": "tsx src/scripts/preview-daily-alert.ts",
+    "alert:test": "tsx src/scripts/send-daily-alert.ts",
+    "alert:critical:preview": "tsx src/scripts/preview-critical-alerts.ts",
+    "alert:critical:test": "tsx src/scripts/send-critical-alerts.ts"
+  },
+  "dependencies": {
+    "discord.js": "^14.25.1",
+    "dotenv": "^16.6.1",
+    "luxon": "^3.7.2"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
