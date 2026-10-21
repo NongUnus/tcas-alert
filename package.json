@@ -9,6 +9,7 @@
     "build": "tsc --noEmit",
     "test": "tsx --test src/**/*.test.ts",
     "alert:preview": "tsx src/scripts/preview-daily-alert.ts",
+    "alert:send": "tsx src/scripts/send-daily-alert.ts",
     "alert:test": "tsx src/scripts/send-daily-alert.ts",
     "alert:critical:preview": "tsx src/scripts/preview-critical-alerts.ts",
     "alert:critical:test": "tsx src/scripts/send-critical-alerts.ts"

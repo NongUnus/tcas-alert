@@ -1,6 +1,7 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import { loadConfig } from "../config.js";
 import { sendDailyAlert } from "../services/daily-alert.js";
+import { sendCriticalAlerts } from "../services/critical-alert.js";
 
 async function main(): Promise<void> {
   const config = loadConfig();
@@ -11,7 +12,8 @@ async function main(): Promise<void> {
     await client.login(config.discordToken);
     await ready;
     await sendDailyAlert(client, config.discordChannelId);
-    console.log("Daily alert sent successfully.");
+    await sendCriticalAlerts(client, config.discordChannelId);
+    console.log("Daily and critical alerts sent successfully.");
   } finally {
     client.destroy();
   }

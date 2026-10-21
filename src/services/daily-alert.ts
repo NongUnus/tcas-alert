@@ -3,9 +3,6 @@ import { tcasEvents } from "../data/events.js";
 import { BANGKOK_TIMEZONE, type TcasEvent } from "../types/event.js";
 import { calendarDaysUntil, eventStart, formatExamTime, formatThaiDate } from "./alert-format.js";
 import { nowInBangkok } from "./clock.js";
-import { sendCriticalAlerts } from "./critical-alert.js";
-
-const DAILY_ALERT_HOUR = 6;
 
 export function createDailyAlertMessage(
   now = nowInBangkok(),
@@ -38,26 +35,4 @@ export async function sendDailyAlert(client: Client, channelId: string): Promise
     throw new Error("Configured Discord channel is not a text channel");
   }
   await channel.send(createDailyAlertMessage());
-}
-
-export function millisecondsUntilNextDailyAlert(now = nowInBangkok()): number {
-  let next = now.startOf("day").set({ hour: DAILY_ALERT_HOUR });
-  if (next <= now) next = next.plus({ days: 1 });
-  return next.toMillis() - now.toMillis();
-}
-
-export function scheduleDailyAlert(client: Client, channelId: string): void {
-  const scheduleNext = () => {
-    setTimeout(async () => {
-      try {
-        await sendDailyAlert(client, channelId);
-        await sendCriticalAlerts(client, channelId);
-      } catch (error) {
-        console.error("Unable to send daily alert:", error);
-      }
-      scheduleNext();
-    }, millisecondsUntilNextDailyAlert());
-  };
-
-  scheduleNext();
 }

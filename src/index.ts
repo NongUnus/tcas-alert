@@ -1,7 +1,6 @@
 import { Client, Events, GatewayIntentBits, REST, Routes } from "discord.js";
 import { pingCommand, handlePing } from "./commands/ping.js";
 import { loadConfig } from "./config.js";
-import { scheduleDailyAlert } from "./services/daily-alert.js";
 
 async function registerCommands(client: Client, token: string, guildId?: string): Promise<void> {
   const commands = [pingCommand.toJSON()];
@@ -21,7 +20,6 @@ async function start(): Promise<void> {
   client.once(Events.ClientReady, async (readyClient) => {
     try {
       await registerCommands(readyClient, config.discordToken, config.discordGuildId);
-      scheduleDailyAlert(readyClient, config.discordChannelId);
       console.log(`TCASAlert is ready as ${readyClient.user.tag}`);
     } catch (error) {
       console.error("Unable to initialize TCASAlert:", error);
